@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-frontend
+  labels:
+    app: {{ .Release.Name }}-frontend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-frontend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-frontend
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: WEB_SERVER_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-frontend
+              key: web-server.host
+        - name: WEB_SERVER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-frontend
+              key: web-server.port
+        ports:
+        - containerPort: 3000

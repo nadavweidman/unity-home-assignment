@@ -17,3 +17,6 @@ dependencies:
 - name: unity-home-assignment-web-server-chart
   version: "0.1.0"
   repository: "file://../unity-home-assignment-web-server-chart"
+- name: unity-home-assignment-frontend-chart
+  version: "0.1.0"
+  repository: "file://../unity-home-assignment-frontend-chart"

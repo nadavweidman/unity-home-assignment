@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-frontend
+data:
+  web-server.host: {{ .Values.env.webserver.host }}
+  web-server.port: "{{ .Values.env.webserver.port }}"

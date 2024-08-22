@@ -1,0 +1,10 @@
+# Common Helm ignores
+.DS_Store
+*.swp
+*.bak
+*.tmp
+*.orig
+*.old
+*.pyc
+*.pyo
+venv

@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: nadavweidman/unity-home-assignment-frontend
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: LoadBalancer
+  port: 3000
+
+env:
+  webserver:
+    host: "unity-home-assignment-web-server"
+    port: 8080

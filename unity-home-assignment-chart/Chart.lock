@@ -11,5 +11,8 @@ dependencies:
 - name: unity-home-assignment-web-server-chart
   repository: file://../unity-home-assignment-web-server-chart
   version: 0.1.0
-digest: sha256:4f2e923b7c650b14e223da751e23ec7cb30b918a85b3912ffb08977be1165abf
-generated: "2024-08-22T16:29:08.455967546+03:00"
+- name: unity-home-assignment-frontend-chart
+  repository: file://../unity-home-assignment-frontend-chart
+  version: 0.1.0
+digest: sha256:9b12cdb049885ce80025175846ab39c7dff0e3c50215ac85c81cdc13ca8e4a56
+generated: "2024-08-22T20:56:14.584223681+03:00"

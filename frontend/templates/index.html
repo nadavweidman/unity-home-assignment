@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+        }
+        #output {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 50px;
+        }
+        .input-field {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Purchase Management</h1>
+    
+    <div class="input-field">
+        <label for="username">Username:</label>
+        <input type="text" id="username" required>
+    </div>
+
+    <div class="input-field">
+        <label for="userId">User ID:</label>
+        <input type="text" id="userId" required>
+    </div>
+
+    <div class="input-field">
+        <label for="price">Price:</label>
+        <input type="number" id="price" required>
+    </div>
+    
+    <button id="buyButton">Buy</button>
+    <button id="getAllUserBuysButton">Get All User Buys</button>
+
+    <div id="output"></div>
+
+    <script>
+        const webServerHost = "{{ WEB_SERVER_HOST }}"
+        const webServerPort = "{{ WEB_SERVER_PORT }}"
+
+        // Function to publish the purchase request to Kafka
+        function sendPurchaseRequest() {
+            // Get the values from the input fields
+            const username = document.getElementById('username').value;
+            const userId = document.getElementById('userId').value;
+            const price = document.getElementById('price').value;
+
+            // Check if all fields are filled (since they are required)
+            if (!username || !userId || !price) {
+                document.getElementById('output').innerText = 'All fields are required.';
+                return;
+            }
+
+            // Create a purchase request object
+            const purchaseRequest = {
+                username: username,
+                userId: userId,
+                price: price
+            };
+
+            // Send the purchase request to the backend API
+            fetch(`http://${webServerHost}:${webServerPort}/api/buy/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(purchaseRequest)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerText = 'Purchase sent: ' + JSON.stringify(data);
+            })
+            .catch(error => {
+                document.getElementById('output').innerText = 'Error: ' + error;
+            });
+        }
+
+        // Function to get all user purchases
+        function getAllUserBuys() {
+            fetch(`http://${webServerHost}:${webServerPort}/api/getAllUserBuys/`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerText = 'User Purchases: ' + JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('output').innerText = 'Error: ' + error;
+            });
+        }
+
+        // Attach event listeners to buttons
+        document.getElementById('buyButton').addEventListener('click', sendPurchaseRequest);
+        document.getElementById('getAllUserBuysButton').addEventListener('click', getAllUserBuys);
+
+    </script>
+
+</body>
+</html>
