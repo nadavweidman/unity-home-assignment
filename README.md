@@ -6,7 +6,8 @@ This project consists of a microservices-based architecture with the following c
 - **MongoDB**: Used for storing user purchases.
 - **Kafka**: A distributed messaging system for handling event-driven communication.
 - **Customer Management API**: A backend API that interacts with MongoDB to manage customer purchase data.
-- **Customer Facing Web Server**: A frontend service that handles customer-facing operations, including purchase requests and retrieving purchase history.
+- **Customer Facing Web Server**: A web server service that handles customer-facing operations, including purchase requests and retrieving purchase history.
+- **Frontend UI**: A frontend UI service that communicates with the customer facing web server.
 
 ## Architecture
 
@@ -32,13 +33,18 @@ The architecture is built using Kubernetes and is deployed on an Amazon EKS clus
    - Interacts with the Customer Management API and Kafka.
    - Deployed as a Helm dependency (a helm chart which i created).
 
+5. **Frontend UI**:
+   - Provides a UI for users to get all of their purchases and make new purchaes.
+   - Interacts with the Customer Facing Web Server.
+   - Deployed as a Helm dependency (a helm chart which i created).
+
 ### Helm Charts
 
 - **Parent Helm Chart**:
-  - This chart encapsulates the entire application, managing the deployment of all components (MongoDB, Kafka, API, and Web Server) as dependencies.
+  - This chart encapsulates the entire application, managing the deployment of all components (MongoDB, Kafka, API, Web Server and Frontend UI) as dependencies.
   
 - **Helm Dependencies**:
-  - The parent Helm chart references the individual charts for MongoDB, Kafka, API, and Web Server, ensuring all components are deployed and configured correctly.
+  - The parent Helm chart references the individual charts for MongoDB, Kafka, API, Web Server and Frontend UI, ensuring all components are deployed and configured correctly.
 
 ### Deployment
 
@@ -52,11 +58,11 @@ The architecture is built using Kubernetes and is deployed on an Amazon EKS clus
     
 
 2. **Accessing the Web Server**:
-   - After deployment, retrieve the external IP address of the LoadBalancer service associated with the Customer Facing Web Server:
+   - After deployment, retrieve the external IP address of the LoadBalancer service associated with the Frontend UI:
      ```bash
      kubectl get svc
      ```
-   - Access the web server using the external IP on port `8080`.
+   - Access the web server using the external IP on port `3000`.
 
 ### Operations
 
