@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-web-server
+data:
+  kafka.brokers: {{ .Values.env.kafka.brokers }}
+  kafka.topic: {{ .Values.env.kafka.topic }}
+  api-server.host: {{ .Values.env.apiserver.host }}
+  api-server.port: "{{ .Values.env.apiserver.port }}"

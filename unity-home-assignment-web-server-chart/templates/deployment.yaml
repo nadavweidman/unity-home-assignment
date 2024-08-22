@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-web-server
+  labels:
+    app: {{ .Release.Name }}-web-server
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-web-server
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-web-server
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: KAFKA_BROKERS
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-web-server
+              key: kafka.brokers
+        - name: KAFKA_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-web-server
+              key: kafka.username
+        - name: KAFKA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-web-server
+              key: kafka.password
+        - name: KAFKA_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-web-server
+              key: kafka.topic
+        - name: API_SERVER_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-web-server
+              key: api-server.host
+        - name: API_SERVER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-web-server
+              key: api-server.port
+        ports:
+        - containerPort: 8080

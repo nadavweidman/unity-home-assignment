@@ -1,0 +1,19 @@
+apiVersion: v2
+name: unity-home-assignment-chart
+description: A Helm chart for deploying the unity home assignment chart
+type: application
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+- name: mongodb
+  version: "15.6.20"
+  repository: "https://charts.bitnami.com/bitnami"
+- name: kafka
+  version: "30.0.4"
+  repository: "https://charts.bitnami.com/bitnami"
+- name: unity-home-assignment-api-server-chart
+  version: "0.1.0"
+  repository: "file://../unity-home-assignment-api-server-chart"
+- name: unity-home-assignment-web-server-chart
+  version: "0.1.0"
+  repository: "file://../unity-home-assignment-web-server-chart"

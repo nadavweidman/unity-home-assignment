@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-api-server
+  labels:
+    app: {{ .Release.Name }}-api-server
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-api-server
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-api-server
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: KAFKA_BROKERS
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-api-server
+              key: kafka.brokers
+        - name: KAFKA_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-api-server
+              key: kafka.username
+        - name: KAFKA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-api-server
+              key: kafka.password
+        - name: KAFKA_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-api-server
+              key: kafka.topic
+        - name: MONGODB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-api-server
+              key: mongodb.rootUsername
+        - name: MONGODB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-api-server
+              key: mongodb.rootPassword
+        - name: MONGODB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-api-server
+              key: mongodb.host
+        - name: MONGODB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-api-server
+              key: mongodb.port
+        ports:
+        - containerPort: 5000

@@ -1,0 +1,4 @@
+Flask==3.0.3
+Flask_Cors==4.0.1
+kafka_python==2.0.2
+pymongo==4.8.0

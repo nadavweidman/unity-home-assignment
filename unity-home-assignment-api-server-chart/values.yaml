@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: nadavweidman/unity-home-assignment-api-server
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 5000
+
+env:
+  kafka:
+    brokers: "unity-home-assignment-kafka-controller-0.unity-home-assignment-kafka-controller-headless.unity-home-assignment.svc.cluster.local:9092,unity-home-assignment-kafka-controller-1.unity-home-assignment-kafka-controller-headless.unity-home-assignment.svc.cluster.local:9092,unity-home-assignment-kafka-controller-2.unity-home-assignment-kafka-controller-headless.unity-home-assignment.svc.cluster.local:9092"
+    username: "user1"
+    password: "password"
+    topic: "purchases"
+  mongodb:
+    rootUsername: "root"
+    rootPassword: "password"
+    host: "unity-home-assignment-mongodb"
+    port: 27017

@@ -1,0 +1,15 @@
+dependencies:
+- name: mongodb
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.6.20
+- name: kafka
+  repository: https://charts.bitnami.com/bitnami
+  version: 30.0.4
+- name: unity-home-assignment-api-server-chart
+  repository: file://../unity-home-assignment-api-server-chart
+  version: 0.1.0
+- name: unity-home-assignment-web-server-chart
+  repository: file://../unity-home-assignment-web-server-chart
+  version: 0.1.0
+digest: sha256:4f2e923b7c650b14e223da751e23ec7cb30b918a85b3912ffb08977be1165abf
+generated: "2024-08-22T16:29:08.455967546+03:00"

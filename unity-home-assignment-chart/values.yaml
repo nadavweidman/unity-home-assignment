@@ -1,0 +1,12 @@
+global:
+  defaultStorageClass: gp2
+
+kafka:
+  sasl:
+    client:
+      passwords:
+        - password
+
+mongodb:
+  auth:
+    rootPassword: password
